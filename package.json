@@ -1,0 +1,59 @@
+{
+  "name": "api_erp",
+  "version": "1.0.0",
+  "description": "API Model to provide business management datas for small (or individual) companies",
+  "main": "server.js",
+  "scripts": {
+    "mongod:build": "docker build -t database ./data",
+    "mongod:run": "docker run -d --name database -h localhost -p 27017:27017 database:latest",
+    "mongod:stop": "docker rm $(docker stop $(docker ps -aq))",
+    "mongod": "npm run mongod:build && npm run mongod:run",
+    "dev": "NODE_ENV=development ts-node ./src/server.ts ",
+    "start": "NODE_ENV=development webpack --config ./webpack.config.js && nodemon ./dist/server.bundle.js",
+    "build": "NODE_ENV=production webpack --config ./webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/greg-olivier/api_erp.git"
+  },
+  "keywords": [
+    "api",
+    "erp",
+    "jwt",
+    "nodejs",
+    "express",
+    "mongoose"
+  ],
+  "author": "Greg OLIVIER",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/greg-olivier/api_erp/issues"
+  },
+  "homepage": "https://github.com/greg-olivier/api_erp#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "debug": "^3.1.0",
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "mongoose": "^5.2.6"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.1.4",
+    "@types/dotenv": "^4.0.3",
+    "@types/express": "^4.16.0",
+    "@types/mocha": "^5.2.5",
+    "@types/mongoose": "^5.2.3",
+    "@types/node": "^10.5.6",
+    "chai": "^4.1.2",
+    "chai-http": "^4.0.0",
+    "dotenv-webpack": "^1.5.7",
+    "mocha": "^5.2.0",
+    "nodemon": "^1.18.3",
+    "ts-loader": "^4.4.2",
+    "ts-node": "^7.0.0",
+    "tslint": "^5.11.0",
+    "typescript": "~2.8.0",
+    "webpack": "^4.16.5",
+    "webpack-cli": "^3.1.0"
+  }
+}
