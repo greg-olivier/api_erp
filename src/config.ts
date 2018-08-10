@@ -1,23 +1,41 @@
-import * as dotenv from "dotenv";
+import * as nconf from "nconf";
 
-dotenv.config();
-let path;
-switch (process.env.NODE_ENV) {
-    case "test":
-        path = __dirname + '/../.env.test';
-        break;
-    case "production":
-        path = __dirname + '/../.env.production';
-        break;
-    default:
-        path = __dirname + '/../.env.development';
+class Config {
+
+    // Default settings if no json config file
+    private default: object = {
+        app: {
+            port: 3000,
+            host: "localhost"
+        },
+        db: {
+            port: 27017,
+            host: "localhost",
+            name: "mongodb"
+        },
+        jwt: {
+            secret: "secret_key",
+            alg: "HS256"
+        }
+    };
+
+
+    // Load Environnment variables
+    constructor() {
+        nconf.argv().env({separator: '.'});
+        let environment = nconf.get('NODE_ENV') || 'dev';
+        nconf.file(environment, {file: __dirname + '/config/' + environment.toLowerCase() + '.json'}).defaults(this.default);
+    };
+
+    // Get a env variable
+    public get(key?: string) {
+        return nconf.get(key);
+    };
+
 }
-dotenv.config({ path: path });
 
-export const APP_PORT = parseInt(process.env.APP_PORT) || 3000;
-export const APP_HOST = process.env.APP_HOST || 'localhost';
+export default new Config().get();
 
-export const DB_PORT = parseInt(process.env.DB_PORT) || 27017;
-export const DB_HOST = process.env.DB_HOST || 'localhost';
-export const DB_NAME = process.env.DB_NAME || 'mongodb';
+
+
 

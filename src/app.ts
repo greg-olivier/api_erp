@@ -1,17 +1,19 @@
 import * as express from "express";
 import * as bodyParser from "body-parser";
 import * as mongoose from "mongoose";
-import {DB_HOST, DB_PORT, DB_NAME} from "./config";
+import config from "./config";
+//import authRouter from "./routes/authRoutes";
 
 class App {
 
     public app: express.Application;
-    public mongoUrl: string = 'mongodb://'+ DB_HOST + ':' + DB_PORT +'/' + DB_NAME;
+    public mongoUrl: string = 'mongodb://'+ config.db.host + ':' + config.db.port +'/' + config.db.name;
 
     constructor() {
         this.app = express();
         this.mongoSetup();
         this.config();
+        //this.routes();
     }
 
     private config(): void{
@@ -20,6 +22,14 @@ class App {
         //support application/x-www-form-urlencoded post data
         this.app.use(bodyParser.urlencoded({ extended: false }));
     }
+
+    // Configure API endpoints.
+    /*
+    private routes(): void {
+        this.app.use('/', authRouter);
+    }
+    */
+
 
     private mongoSetup(): void{
         const options = {
@@ -41,7 +51,7 @@ class App {
                 setTimeout(this.mongoSetup(), 3000);
 
             } else {
-                console.log('Mongoose default connection open to ' + DB_NAME);
+                console.log('Mongoose default connection open to ' + config.db.name);
             }
         });
     }

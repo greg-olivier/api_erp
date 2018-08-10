@@ -1,8 +1,8 @@
 import app from "./app";
-import {APP_HOST, APP_PORT} from "./config";
+import config from "./config";
 
-app.listen(APP_PORT, (err:any) => {
+app.listen(config.app.port, config.app.post, (err:any) => {
     if (err) throw err;
-    console.log('App listening on ' + APP_HOST + ':' + APP_PORT);
+    console.log('App listening on ' + config.app.host + ':'+ config.app.port);
     console.log('Press CTRL-C to stop\n');
 });
