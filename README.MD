@@ -10,7 +10,7 @@ Install [NodeJS](https://nodejs.org/en/) and [Docker](https://docs.docker.com/in
 
 ```
 // Check version after install
-node -v  npm -v && docker -v
+node -v && npm -v && docker -v
 
 ```
 
