@@ -1,8 +1,15 @@
-import app from "./app";
-import config from "./config";
+import * as express from "express";
+import constant from "./config/constants/Constants";
+import Middlewares from "./config/middlewares/Base/MiddlewaresBase";
+import BaseRoutes from "./routes/base/BaseRoutes";
 
-app.listen(config.app.port, config.app.post, (err:any) => {
-    if (err) throw err;
-    console.log('App listening on ' + config.app.host + ':'+ config.app.port);
-    console.log('Press CTRL-C to stop\n');
+let app = Middlewares.configuration;
+let port = constant.app.port;
+
+app.set("port", port);
+
+app.listen(port, () => {
+    console.log("API is running at " + constant.app.host + ":" + constant.app.port);
 });
+
+app.use("/", BaseRoutes.routes);

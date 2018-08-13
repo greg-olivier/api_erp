@@ -4,12 +4,12 @@
   "description": "API Model to provide business management datas for small (or individual) companies",
   "main": "server.js",
   "scripts": {
-    "mongod:build": "docker build -t database ./data",
-    "mongod:run": "docker run -d --name database -h localhost -p 27017:27017 database:latest",
+    "mongod:build": "docker build -t mongodb ./data",
+    "mongod:run": "docker run --name mongodb -v $PWD/data/db:/data/db -h localhost -p 27017:27017 mongodb:latest",
     "mongod:stop": "docker rm $(docker stop $(docker ps -aq))",
     "mongod": "npm run mongod:build && npm run mongod:run",
-    "dev": "ts-node ./src/server.ts ",
-    "start": "webpack --config ./webpack.config.js && nodemon ./dist/server.bundle.js",
+    "dev": "NODE_ENV=dev ts-node ./src/server.ts ",
+    "start": "webpack --config ./webpack.config.js && NODE_ENV=dev nodemon ./dist/server.bundle.js",
     "build": "webpack --config ./webpack.config.js && NODE_ENV=prod node ./dist/server.bundle.js  ",
     "test": "NODE_ENV=test mocha -r ts-node/register test/**/*.test.ts"
   },
@@ -39,7 +39,8 @@
     "express": "^4.16.3",
     "jsonwebtoken": "^8.3.0",
     "mongoose": "^5.2.6",
-    "nconf": "^0.10.0"
+    "nconf": "^0.10.0",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.1",
@@ -52,6 +53,7 @@
     "@types/mongoose": "^5.2.3",
     "@types/nconf": "0.0.37",
     "@types/node": "^10.5.6",
+    "@types/uuid": "^3.4.3",
     "chai": "^4.1.2",
     "chai-http": "^4.0.0",
     "dotenv-webpack": "^1.5.7",

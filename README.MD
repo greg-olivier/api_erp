@@ -15,19 +15,23 @@ node -v  npm -v && docker -v
 ```
 
 ### INSTALLING
-
 ####Database
-First, build MongoDB image
+Create a db directory to have persistent data on your host
+```
+cd data && mkdir db
+```
+
+Build MongoDB image ..
 ```
 npm run mongod:build
 ```
 
-Then, run MongoDB container
+... & Run it
 ```
 npm run mongod:run
 ```
 
-######*If you have some troubles with running MongoDB container, try to stop all and retry.*
+######If you have some troubles with running MongoDB container, try to stop all and retry
 Stop all MongoDB containers
 ```
 npm run mongod:stop

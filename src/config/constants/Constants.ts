@@ -1,6 +1,6 @@
 import * as nconf from "nconf";
 
-class Config {
+class Constant {
 
     // Default settings if no json config file
     private default: object = {
@@ -23,8 +23,8 @@ class Config {
     // Load Environnment variables
     constructor() {
         nconf.argv().env({separator: '.'});
-        let environment = nconf.get('NODE_ENV') || 'dev';
-        nconf.file(environment, {file: __dirname + '/config/' + environment.toLowerCase() + '.json'}).defaults(this.default);
+        let environment = nconf.get('NODE_ENV') || 'default';
+        nconf.file(environment, {file: __dirname + '/../env/' + environment.toLowerCase() + '.json'}).defaults(this.default);
     };
 
     // Get a env variable
@@ -34,7 +34,7 @@ class Config {
 
 }
 
-export default new Config().get();
+export default new Constant().get();
 
 
 

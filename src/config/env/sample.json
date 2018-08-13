@@ -1,0 +1,31 @@
+{
+  "app" : {
+    "port":3000,
+    "host":"localhost"
+  },
+  "db": {
+    "port":27017,
+    "host":"localhost",
+    "name": "mydatabase"
+    /*
+
+    To secure the database connection, you should have a look on :
+    - https://rancher.com/securing-containerized-instance-mongodb/
+    - https://medium.com/@raj_adroit/mongodb-enable-authentication-enable-access-control-e8a75a26d332
+
+    Or for french speaking people (with SSL Bonus) -> http://pierrepironin.fr/docker-et-mongodb/
+
+    After creating user(s) and permissions,
+    uncomment lines above and connect to MongoDB URI with credentials
+    */
+
+    /*
+    "user" : "admin",
+    "pwd": "password"
+    */
+  },
+  "jwt": {
+    "secret": "my_super_secret",
+    "alg": "HS256"
+  }
+}
