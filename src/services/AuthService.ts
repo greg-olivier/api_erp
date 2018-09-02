@@ -27,7 +27,7 @@ class AuthService {
 
     login(user: IUserModel): Promise<any> {
         let candidate = user;
-        return this._userService.findByEmail(candidate).then((userDb: IUserModel) => {
+        return this._userService.findOne({login:candidate.login}).then((userDb: IUserModel) => {
             if (!userDb)
                 throw new AuthenticationError('Email or password incorrect');
             else return bcrypt.compare(candidate.password, userDb.password).then(res => {

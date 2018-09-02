@@ -19,11 +19,11 @@ class AuthController {
 
     let user: IUserModel = <IUserModel>req.body;
     let authService = new AuthService();
-    const re = /\S+@\S+\.\S+/;
+    //const re = /\S+@\S+\.\S+/;
 
-    if (!re.test(user.email) || !user.password) {
+    if (!user.login || !user.password) {
       res.status(400);
-      res.json({success: false, message: "Email or password not provided"});
+      res.json({success: false, message: "Login or password not provided"});
     }
 
     authService.login(user)

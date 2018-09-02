@@ -1,6 +1,6 @@
 # API-based ERP
 
-The goal of this project is to apply a repository pattern to an API with JWT Authentication
+The goal of this project is to apply repository pattern design to API with JWT Authentication
 
 ### PREREQUISITES
 
@@ -9,7 +9,7 @@ Install [NodeJS](https://nodejs.org/en/) and [Docker](https://docs.docker.com/in
 
 ```
 // Check version after install
-node -v  npm -v && docker -v
+node -v && npm -v && docker -v
 
 ```
 
