@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "mongod:build": "docker build -t mongodb ./data",
-    "mongod:run": "docker run --name mongodb -v $PWD/data/db:/data/db -h localhost -p 27017:27017 mongodb:latest",
+    "mongod:run": "docker run -d --name mongodb -v $PWD/data/db:/data/db -h localhost -p 27017:27017 mongodb:latest",
     "mongod:stop": "docker rm $(docker stop $(docker ps -aq))",
     "mongod": "npm run mongod:build && npm run mongod:run",
     "dev": "NODE_ENV=dev ts-node ./src/server.ts ",

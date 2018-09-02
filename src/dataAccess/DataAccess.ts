@@ -1,5 +1,5 @@
 import { Mongoose, Connection } from 'mongoose';
-import constant from "../../config/constants/Constants";
+import constant from "../config/constants/Constants";
 
 class DataAccess {
     static mongooseInstance: any;
@@ -45,6 +45,7 @@ class DataAccess {
 
         this.mongooseConnection.connection.on('error', function(err:Error){
             console.log("Error on mongoose connection : "+err +" on " + constant.db.name);
+            process.exit();
         });
 
         this.mongooseConnection.connection.on('reconnected', function () {

@@ -7,8 +7,8 @@ class UserModel {
     constructor(userModel: IUserModel) {
         this._userModel = userModel;
     }
-    get name (): string {
-        return this._userModel.name;
+    get fullname (): string {
+        return this._userModel.firstname + ' ' + this._userModel.lastname;
     }
 
     get email (): string {

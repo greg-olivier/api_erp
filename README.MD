@@ -1,7 +1,6 @@
-# API-based ERP 
+# API-based ERP
 
-The goal of this project is to build an API to provide business management datas for small companies.
-Front-end development (Angular / React ?) will succeed in a related repositery.
+The goal of this project is to apply a repository pattern to an API with JWT Authentication
 
 ### PREREQUISITES
 
@@ -47,7 +46,7 @@ Run server for development...
 ```
 npm run dev
 ```
-...or build it with Webpack 
+...or build it with Webpack
 ```
 npm start
 ```
@@ -76,4 +75,3 @@ Still in Progress...
 ## Authors
 
 * **Greg OLIVIER** - [GitHub](https://github.com/greg-olivier)
-

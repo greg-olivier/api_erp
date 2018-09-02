@@ -1,15 +1,55 @@
-import * as express from "express";
+import * as http from 'http';
 import constant from "./config/constants/Constants";
-import Middlewares from "./config/middlewares/Base/MiddlewaresBase";
-import BaseRoutes from "./routes/base/BaseRoutes";
+import app from './App';
 
-let app = Middlewares.configuration;
-let port = constant.app.port;
 
-app.set("port", port);
+class Server {
 
-app.listen(port, () => {
-    console.log("API is running at " + constant.app.host + ":" + constant.app.port);
-});
+    private static serverInstance: Server;
+    private server: any;
+    private port: number;
 
-app.use("/", BaseRoutes.routes);
+    public getServerInstance(): any {
+        return this.server;
+    }
+
+    public static bootstrap(): Server {
+        if (!this.serverInstance) {
+            this.serverInstance = new Server();
+            return this.serverInstance;
+        } else {
+            return  this.serverInstance;
+        }
+    }
+
+    public constructor() {
+        this.runServer();
+    }
+
+    private runServer(): void {
+        this.port = constant.app.port;
+        app.set('port', this.port);
+        this.createServer();
+    }
+
+    private createServer() {
+        this.server = http.createServer(app);
+        this.server.listen(this.port);
+
+        this.server.on('listening', () => {
+            let address = this.server.address();
+            let bind = (typeof address === 'string') ? `pipe ${address}` : `port ${address.port}`;
+            console.log('API listen on ' + bind);
+        });
+
+        this.server.on('error', (error: NodeJS.ErrnoException) => {
+            if (error.syscall !== 'listen') throw error;
+            console.error(error);
+            process.exit(1);
+        });
+    }
+
+
+}
+
+export const server = Server.bootstrap();

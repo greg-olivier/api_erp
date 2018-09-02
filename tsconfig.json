@@ -1,6 +1,6 @@
 {
   "files": [
-    "src/server.ts"
+    "src/Server.ts"
   ],
   "compilerOptions": {
     "module": "commonjs",

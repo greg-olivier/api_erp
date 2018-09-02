@@ -3,7 +3,7 @@ import * as nconf from "nconf";
 class Constant {
 
     // Default settings if no json config file
-    private default: object = {
+    private default = {
         app: {
             port: 3000,
             host: "localhost"
@@ -15,7 +15,8 @@ class Constant {
         },
         jwt: {
             secret: "secret_key",
-            alg: "HS256"
+            alg: "HS256",
+            expire: 60 * 5, // 5min
         }
     };
 
@@ -28,7 +29,7 @@ class Constant {
     };
 
     // Get a env variable
-    public get(key?: string) {
+    get(key?: string) {
         return nconf.get(key);
     };
 

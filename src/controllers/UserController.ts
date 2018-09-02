@@ -1,92 +1,84 @@
 import * as express from "express";
-import UserBusiness from "./../app/business/UserBusiness";
+import UserService from "../services/UserService";
 import IBaseController from "./interfaces/base/IBaseController";
-import IUserModel from "./../app/models/interfaces/IUserModel";
+import IUserModel from "../models/interfaces/IUserModel";
+import HandleError from "../handlers/RequestError";
 
 
-
-class UserController implements IBaseController <UserBusiness> {
+class UserController implements IBaseController <UserService> {
 
     create(req: express.Request, res: express.Response): void {
-        try {
 
             let user: IUserModel = <IUserModel>req.body;
-            let userBusiness = new UserBusiness();
-            userBusiness.create(user, (error, result) => {
-                if(error) res.send({"error": error});
-                else res.send({"success": "success"});
+            let userBusiness = new UserService();
+            userBusiness.create(user)
+                .then((result: IUserModel) => {
+                res.send({"success": result})
+            })
+                .catch((err: HandleError) => {
+                    console.error(err);
+                    res.send({"error": err.name + ": " + err.message});
             });
-        }
-        catch (e)  {
-            console.log(e);
-            res.send({"error": "error in your request"});
 
-        }
+
     }
+
     update(req: express.Request, res: express.Response): void {
-        try {
+
             let user: IUserModel = <IUserModel>req.body;
             let _id: string = req.params._id;
-            let userBusiness = new UserBusiness();
-            userBusiness.update(_id, user, (error, result) => {
-                if(error) res.send({"error": error});
-                else res.send({"success": "success"});
-            });
-        }
-        catch (e)  {
-            console.log(e);
-            res.send({"error": "error in your request"});
+            let userBusiness = new UserService();
+            userBusiness.update(_id, user)
+                .then(result => {
+                res.send({"success": "update successful"});
+            })
+                .catch(err => {
+                    console.error(err);
+                    res.send({"error": err.name + ": " + err.message});
+            })
 
-        }
+
     }
+
     delete(req: express.Request, res: express.Response): void {
-        try {
 
             let _id: string = req.params._id;
-            let userBusiness = new UserBusiness();
-            userBusiness.delete(_id, (error, result) => {
-                if(error) res.send({"error": error});
-                else res.send({"success": "success"});
+            let userBusiness = new UserService();
+            userBusiness.delete(_id)
+                .then(result => {
+                res.send({"success": "delete successful"});
+            })
+                .catch(err => {
+                    console.error(err);
+                    res.send({"error": err.name + ": " + err.message});
             });
-        }
-        catch (e)  {
-            console.log(e);
-            res.send({"error": "error in your request"});
 
-        }
     }
+
     find(req: express.Request, res: express.Response): void {
-        try {
-
-            let userBusiness = new UserBusiness();
-            userBusiness.find((error, result) => {
-                if(error) res.send({"error": error});
-                else res.send(result);
+        let userBusiness = new UserService();
+        userBusiness.find()
+            .then(result => {
+                res.send({"result": result});
+            })
+            .catch(err => {
+                console.error(err);
+                res.send({"error": err.name + ": " + err.message});
             });
-        }
-        catch (e)  {
-            console.log(e);
-            res.send({"error": "error in your request"});
-
-        }
-    }
-    findOne(req: express.Request, res: express.Response): void {
-        try {
-
-            let _id: string = req.params._id;
-            let userBusiness = new UserBusiness();
-            userBusiness.findOne(_id, (error, result) => {
-                if(error) res.send({"error": error});
-                else res.send(result);
-            });
-        }
-        catch (e)  {
-            console.log(e);
-            res.send({"error": "error in your request"});
-
-        }
     }
 
-
+    findById(req: express.Request, res: express.Response): void {
+        let _id: string = req.params._id;
+        let userBusiness = new UserService();
+        userBusiness.findById(_id)
+            .then(result => {
+                res.json(result);
+            })
+            .catch(err => {
+                console.error(err);
+                res.send({"error": err.name + ": " + err.message});
+            })
+    }
 }
+
 export default UserController;
